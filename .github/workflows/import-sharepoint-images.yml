@@ -18,6 +18,7 @@ jobs:
   import:
     if: github.repository == 'MT-Daisuke/midoritech-social-assets' && github.ref == 'refs/heads/main' && github.actor == github.repository_owner
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,6 +26,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Check configured OIDC identifiers
+        shell: bash
+        env:
+          CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+          TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+          BATCH: ${{ inputs.batch }}
+        run: |
+          set -euo pipefail
+          [ "$BATCH" = '2026-10-launch' ] || exit 2
+          [ -n "$CLIENT_ID" ] && [ -n "$TENANT_ID" ] || { echo 'Missing AZURE_CLIENT_ID or AZURE_TENANT_ID repository variables'; exit 2; }
       - name: Authenticate to Microsoft Graph using OIDC
         uses: azure/login@v3
         with:
