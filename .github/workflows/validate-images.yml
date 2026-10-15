@@ -1,0 +1,36 @@
+name: Validate public social images
+on:
+  push:
+    paths:
+      - 'instagram/**'
+      - '.github/workflows/validate-images.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate PNG signatures and image dimensions
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import struct, sys
+          files = sorted(Path("instagram").rglob("*.png")) if Path("instagram").exists() else []
+          if not files:
+              print("No PNG assets present yet; nothing to validate.")
+              sys.exit(0)
+          for p in files:
+              with p.open("rb") as f:
+                  header = f.read(24)
+              if len(header) != 24 or header[:8] != b"\x89PNG\r\n\x1a\n" or header[12:16] != b"IHDR":
+                  raise SystemExit(f"Invalid PNG signature: {p}")
+              width, height = struct.unpack(">II", header[16:24])
+              if not (1 <= width <= 4096 and 1 <= height <= 4096):
+                  raise SystemExit(f"Invalid dimensions: {p}: {width}x{height}")
+              if p.stat().st_size > 10_000_000:
+                  raise SystemExit(f"File exceeds 10MB: {p}")
+              print(f"OK {p} {width}x{height} {p.stat().st_size} bytes")
+          PY
