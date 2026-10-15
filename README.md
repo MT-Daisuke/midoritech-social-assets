@@ -1,17 +1,23 @@
 # Midoritech Social Assets
 
-Public, approved image assets for HTTPS delivery to social publishing tools such as Metricool.
+Public, **approved** image assets for HTTPS delivery to corporate social publishing tools such as Metricool.
 
-## Publishing policy
-- Publish only approved non-confidential assets. SharePoint remains the private source of truth.
-- Never upload credentials, private documents, personal data, or unapproved images.
-- Keep public image assets online until the Instagram post has been published and verified.
-- Organize Instagram media under `instagram/YYYY/YYYY-MM-slug/`, using numbered filenames in carousel order.
-- Validate public HTTPS access and successful Metricool media ingestion before scheduling.
-- Track private source identifiers and published post URLs in SharePoint, not in this public repository.
-- Git history may preserve previously committed images after deletion.
+## Source-of-truth and publication policy
+- SharePoint is the authoritative location for approvals, source images, captions and the private publication ledger. This repository hosts **public delivery copies only**.
+- Do not upload credentials, private documents, personal data, unapproved imagery or signed SharePoint download URLs.
+- Keep published asset URLs stable. Deleting a public Git file does not necessarily erase it from Git history.
+- Instagram images: `instagram/YYYY/YYYY-MM-slug/`; numbered filenames preserve carousel order.
+- Validate GitHub Actions success, **every** public image URL, Metricool media ingestion, and the actual Instagram publication independently.
+- Decide AI disclosure **per post** from production provenance and applicable platform rules; never blindly set `isAiGenerated`.
 
-## First publication
-- Destination: `@midoritech.gardening`
-- Asset folder: `instagram/2026/2026-10-launch/`
-- Status: pending asset upload, Pages setup and publishing verification.
+## Procedures
+- [Publishing standard operating procedure](docs/instagram-publishing-sop.md)
+- [SharePoint importer and OIDC setup](docs/import-setup.md)
+- [First publication verification record](docs/instagram-launch-2026-10-15.md)
+
+## First production publication
+- Account: `@midoritech.gardening`
+- Assets: `instagram/2026/2026-10-launch/` (four PNGs)
+- SharePoint → GitHub Actions → GitHub Pages → Metricool → Instagram
+- **Published 2026-10-15**; owner-confirmed via Instagram screenshot. [Import run](https://github.com/MT-Daisuke/midoritech-social-assets/actions/runs/38698950158).
+- Current importer is **batch-specific** to `2026-10-launch`; future posts require a new reviewed batch mapping and workflow input.
