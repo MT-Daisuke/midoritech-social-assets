@@ -1,0 +1,53 @@
+name: Import approved SharePoint Instagram assets
+on:
+  workflow_dispatch:
+    inputs:
+      batch:
+        description: Approved SharePoint asset batch
+        type: choice
+        required: true
+        options:
+          - 2026-10-launch
+permissions:
+  contents: write
+  id-token: write
+concurrency:
+  group: social-assets-sharepoint-import
+  cancel-in-progress: false
+jobs:
+  import:
+    if: github.repository == 'MT-Daisuke/midoritech-social-assets' && github.ref == 'refs/heads/main' && github.actor == github.repository_owner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Authenticate to Microsoft Graph using OIDC
+        uses: azure/login@v3
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          allow-no-subscriptions: true
+      - name: Import and validate approved images
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +x
+          graph_access_token="$(az account get-access-token --resource-type ms-graph --query accessToken --output tsv)"
+          GRAPH_ACCESS_TOKEN="$graph_access_token" python scripts/import_sharepoint_images.py
+          unset graph_access_token
+      - name: Commit images using the workflow token
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- instagram/2026/2026-10-launch/
+          if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
+          git commit -m 'Import approved Instagram launch images from SharePoint'
+          git -c http.extraheader="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)" push origin HEAD:main
