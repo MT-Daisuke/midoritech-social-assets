@@ -10,7 +10,7 @@ Effective: 2026-10-15. Owner: Midoritech LLC. This public document contains no c
 
 ## Repeatable process
 1. Create assets and caption in SharePoint; check official logo, typography, QR (if any), factual claims, copyrights, image order and crop. Record approval before publication.
-2. Create a **new batch** with unique item IDs, a new `instagram/YYYY/YYYY-MM-slug/` directory and a new workflow input. Current importer is **hard-coded to 2026-10-launch only**; never rerun it for a different batch without updating and reviewing code.
+2. Create a **new reviewed manifest** under `manifests/YYYY-MM-slug.json` with approved SharePoint item IDs, ordered images, dimensions and unique `instagram/YYYY/YYYY-MM-slug/` destination. Supply its batch name as the manual workflow input. Never repurpose a published batch or overwrite public images.
 3. Review the public/nonconfidential status of all assets. Import via the manually triggered GitHub Action on `main`. Preserve the OIDC branch/repository trust scope and least-privilege SharePoint access.
 4. Verify a successful workflow, file count, correct ordering, PNG integrity, and actual public HTTPS access for **every** image. Confirm the exact approved image visually; a green workflow alone is insufficient.
 5. Check AI disclosure decision **per post** (below), caption, destination account, carousel order, publication timezone and date. Obtain final publication authorization.
