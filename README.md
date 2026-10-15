@@ -20,4 +20,4 @@ Public, **approved** image assets for HTTPS delivery to corporate social publish
 - Assets: `instagram/2026/2026-10-launch/` (four PNGs)
 - SharePoint → GitHub Actions → GitHub Pages → Metricool → Instagram
 - **Published 2026-10-15**; owner-confirmed via Instagram screenshot. [Import run](https://github.com/MT-Daisuke/midoritech-social-assets/actions/runs/38698950158).
-- Current importer is **batch-specific** to `2026-10-launch`; future posts require a new reviewed batch mapping and workflow input.
+- Importer supports reviewed manifest batches in `manifests/YYYY-MM-slug.json`; first-batch production evidence exists, and new-batch testing remains required.
