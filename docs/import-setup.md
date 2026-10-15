@@ -18,6 +18,6 @@
 6. Verify actual public image access and approved media before scheduling in Metricool.
 
 ## When onboarding a new post batch
-The current Python importer and workflow input are **fixed to the first four approved images**. Before any new publication, add the new approved SharePoint item IDs, new destination directory and reviewed workflow input. Never replace the first batch's public URLs or source IDs with a different campaign. A generalized manifest-based importer is a future enhancement, not an implemented capability.
+**Manifest-driven batch import is now implemented.** Create and review `manifests/YYYY-MM-slug.json` with `schema_version: 1`, `approved: true`, the approved SharePoint `drive_id`, `batch`, `destination: instagram/YYYY/YYYY-MM-slug`, and ordered `images` entries (`filename`, `item_id`, `dimensions`, optional `sha256`). Select that batch name in the manual Actions workflow input. The importer validates names, dimensions, PNG signatures, optional hashes, and refuses changed overwrites. **Only the original batch has production success evidence; the generalized path has not yet been tested on a new approved batch.** Never repurpose an existing public path.
 
 See [publishing SOP](instagram-publishing-sop.md) and [first publication record](instagram-launch-2026-10-15.md).
