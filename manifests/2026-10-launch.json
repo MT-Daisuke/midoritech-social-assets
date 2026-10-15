@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "batch": "2026-10-launch",
+  "approved": true,
+  "drive_id": "b!Ye4_9P0xzk65c6Mj7bUkjX8oaSvbMhpPpVtTZ166XWfmlzKzjwuDSJb2t27rNY48",
+  "destination": "instagram/2026/2026-10-launch",
+  "images": [
+    {
+      "filename": "01_launch.png",
+      "item_id": "01KL4L6A736B5NQEJXEJGLIHYQZUBBDC5N",
+      "dimensions": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "filename": "02_features.png",
+      "item_id": "01KL4L6A7R5KOFXLBHJBCLGYD7UOAEHH36",
+      "dimensions": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "filename": "03_trees.png",
+      "item_id": "01KL4L6AY52GRQFFQI5RF3MFHGPIC7VXYV",
+      "dimensions": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "filename": "04_follow.png",
+      "item_id": "01KL4L6A4JBVAWQ76ETREZFH3ZQC3QZRMZ",
+      "dimensions": [
+        1080,
+        1350
+      ]
+    }
+  ]
+}
